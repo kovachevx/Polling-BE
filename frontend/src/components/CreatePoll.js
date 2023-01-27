@@ -42,6 +42,7 @@ const CreatePoll = (props) => {
 
       <form onSubmit={uploadImageHandler} encType="multipart/form-data">
         <input type="file" name="image" id="imageUpload" onChange={imageUploadOnChange} />
+        <input type="text" name="title" ref={title}/>
         <Button className={classes.btn} color="success" type="submit">
           CREATE POLL
         </Button>
@@ -53,7 +54,7 @@ const CreatePoll = (props) => {
             <label className={classes.label} htmlFor="title">
               Poll Title:
             </label>
-            <input className={classes.input} ref={title} id="title" name="title" type="text" />
+            {/* <input className={classes.input} ref={title} id="title" name="title" type="text" /> */}
           </div>
           <div className={classes.inputsContainer}>
             <div className={classes.imageContainer}>

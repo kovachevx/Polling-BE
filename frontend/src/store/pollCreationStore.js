@@ -148,6 +148,7 @@ export function PollCreationStore(props) {
     let formData = new FormData();
 
     formData.append("image", imageUpload, imageUpload.name);
+    formData.append("title", title.current.value);
 
     axios
       .post("http://localhost:5000/polls/upload", formData)
