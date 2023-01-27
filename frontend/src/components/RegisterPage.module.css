@@ -1,0 +1,28 @@
+.inputsContainer {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    background-image: linear-gradient(to left, brown, orange);
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 250px;
+}
+
+label {
+    width: 150px
+}
+
+.d-flex {
+    margin: px;
+}
+
+.h2 {
+    padding: 10px;
+}
+
+.para {
+    color: white;
+    font-size: 12px;
+}

@@ -1,0 +1,82 @@
+.label {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.input {
+    margin: 10px 0;
+    width: 400px;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    width: 500px;
+    margin: 10px;
+    padding: 10px;
+    background-image: linear-gradient(to left, brown, orange);
+}
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.inputsContainer {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 20px;
+    background-image: linear-gradient(to left, brown, orange);
+    min-width: 800px;
+}
+
+.inputsContainer:hover {
+    box-shadow: 2px 3px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titleContainer:hover {
+    box-shadow: 1px 2px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+.h2 {
+    text-decoration: underline;
+    border-top: 1px solid #F3FFBD;
+    padding-top: 10px;
+}
+
+.imageContainer {
+    margin: 10px 0 20px 0;
+    border: '5px solid #F3FFBD';
+    width: 100%;
+
+}
+
+.imageInput {
+    border: '5px solid #F3FFBD' !important;
+    border-width: 0 1px;
+    margin: 5px;
+    padding: 5px;
+
+}

@@ -1,0 +1,15 @@
+.voteContainer {
+    margin: 5px;
+}
+
+.voteInput {
+    margin-right: 5px;
+}
+
+.modalFooter {
+    justify-content: space-around !important;
+}
+
+.footerBtn {
+    width: 115px;
+}

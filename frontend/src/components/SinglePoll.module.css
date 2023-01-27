@@ -1,0 +1,52 @@
+.title {
+    font-weight: bold;
+}
+
+.singlePollContainer {
+    border: 1px solid #F3FFBD;
+    width: 50%;
+    margin: 10px;
+    border-radius: 10px;
+    font-size: larger;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    background-image: linear-gradient(to left, brown, orange);
+    /* background-image: linear-gradient(to left, #F3FFBD, #70C1B3); */
+}
+
+.singlePollContainer:hover {
+    cursor: pointer;
+}
+
+.singlePollContainer:hover {
+    box-shadow: 2px 3px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.singlePollContainer .prompt {
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    margin: 10px;
+}
+
+.img {
+    width: 250px;
+    margin: 15px;
+}
+
+.btn {
+    margin: 5px;
+    width: 75px;
+}
+
+.creator {
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.title {
+    font-size: 25px;
+}

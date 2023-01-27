@@ -1,0 +1,53 @@
+.pollsContainer {
+    border: 1px solid #F3FFBD;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.p,
+.h2 {
+    margin: 10px;
+}
+
+.h2 {
+    text-decoration: underline;
+}
+
+.registerPrompt {
+    margin: 10px 0;
+}
+
+.searchBar {
+    width: 250px;
+}
+
+.navLink {
+    color: #F3FFBD;
+    padding: 10px;
+    border: 1px solid #F3FFBD;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.navLink:hover {
+    color: white;
+    border: 2px solid white;
+}
+
+.activeNavLink {
+    color: white;
+    background-color: #dc3545;
+}
+
+.activeNavLink:hover {
+    cursor: default;
+    color: rgba(255, 255, 255, 0.45);
+    border: 1px solid #F3FFBD;
+}
+
+.linksContainer {
+    margin: 20px;
+}
