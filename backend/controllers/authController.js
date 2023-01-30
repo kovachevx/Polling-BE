@@ -1,19 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const transporter = require("../config/nodemailer");
 // const RefreshToken = require("../models/refreshToken");
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SENDER_EMAIL_HOST,
-  port: process.env.SENDER_EMAIL_PORT,
-  secure: true,
-  auth: {
-    user: process.env.SENDER_EMAIL_ADDRESS,
-    pass: process.env.SENDER_EMAIL_PASSWORD
-  }
-});
 
 // function generateAccessToken(user) {
 //   return jwt.sign({ email: user.email, userId: user._id.toString() }, process.env.ACCESS_TOKEN_SECRET, {
@@ -98,7 +88,6 @@ exports.register = (req, res, next) => {
           return user.save();
         })
         .then((result) => {
-          console.log(result);
           console.log("Successful registration!");
           return transporter.sendMail({
             to: email,

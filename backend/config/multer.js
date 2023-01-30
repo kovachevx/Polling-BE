@@ -3,11 +3,10 @@ const path = require("path");
 
 exports.fileStorage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, path.join(__dirname, "../public/images"));
+    callback(null, path.join(__dirname, "../images"));
   },
   filename: (req, file, callback) => {
-    const [name, ext] = file.originalname.split(".");
-    callback(null, name + "-" + Date.now() + "." + ext);
+    callback(null, file.originalname + "-" + Date.now() + "." + file.mimetype.split("/")[1]);
   }
 });
 

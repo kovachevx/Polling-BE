@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const path = require("path");
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 require("dotenv").config();
 
-const {fileStorage, fileFilter} = require("./config/multer");
+const { fileStorage, fileFilter } = require("./config/multer");
 
 const app = express();
 
@@ -15,6 +17,8 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:3000", credentials: true, preflightContinue: true }));
+
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/polls", require("./routes/pollRoutes"));
 app.use("/auth", require("./routes/userRoutes"));

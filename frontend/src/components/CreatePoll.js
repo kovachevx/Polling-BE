@@ -4,7 +4,6 @@ import useLoginStore from "../store/loginStore";
 import Option from "./Option";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const CreatePoll = (props) => {
   const {
@@ -16,14 +15,10 @@ const CreatePoll = (props) => {
     inputChangeHandler,
     imageURL,
     imageUploadOnChange,
-    uploadImageHandler
+    addImageToggle,
+    imageType
   } = useStore();
   const { loggedUser } = useLoginStore();
-  const [imageType, setImageType] = useState("url");
-
-  const addImageToggle = () => {
-    imageType === "url" ? setImageType("upload") : setImageType("url");
-  };
 
   return (
     <div>
@@ -39,14 +34,6 @@ const CreatePoll = (props) => {
           </Link>
         </div>
       )}
-
-      <form onSubmit={uploadImageHandler} encType="multipart/form-data">
-        <input type="file" name="image" id="imageUpload" onChange={imageUploadOnChange} />
-        <Button className={classes.btn} color="success" type="submit">
-          CREATE POLL
-        </Button>
-      </form>
-
       {Object.keys(loggedUser).length > 0 && (
         <form onSubmit={submitFormHandler} className={classes.formContainer} encType="multipart/form-data">
           <div className={classes.titleContainer}>
@@ -58,17 +45,21 @@ const CreatePoll = (props) => {
           <div className={classes.inputsContainer}>
             <div className={classes.imageContainer}>
               <div>
-                <Button className={classes.btn} color="primary" onClick={addImageToggle} disabled={imageType === "url"}>
+                <h5>Add an Image (optional)</h5>
+                <button
+                  className={imageType === "url" ? classes.activeNavLink : classes.navLink}
+                  onClick={addImageToggle}
+                  disabled={imageType === "url"}
+                >
                   Provide URL
-                </Button>
-                <Button
-                  className={classes.btn}
-                  color="primary"
+                </button>
+                <button
+                  className={imageType !== "url" ? classes.activeNavLink : classes.navLink}
                   onClick={addImageToggle}
                   disabled={imageType === "upload"}
                 >
                   Upload File
-                </Button>
+                </button>
               </div>
               <div className={classes.imageInput}>
                 <label className={classes.label} htmlFor="imageURL">

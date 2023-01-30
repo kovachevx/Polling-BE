@@ -35,7 +35,7 @@
 .inputsContainer {
     border: 1px solid rgba(0, 0, 0, 0.4);
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     background-image: linear-gradient(to left, brown, orange);
     min-width: 800px;
 }
@@ -67,10 +67,11 @@ label:hover {
 }
 
 .imageContainer {
-    margin: 10px 0 20px 0;
+    margin: 10px 10px 20px 10px;
     border: '5px solid #F3FFBD';
-    width: 100%;
-
+    background-image: linear-gradient(to right, brown, orange);
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .imageInput {
@@ -79,4 +80,33 @@ label:hover {
     margin: 5px;
     padding: 5px;
 
+}
+
+.navLink {
+    color: #F3FFBD;
+    padding: 10px;
+    border: 1px solid #F3FFBD;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: transparent;
+    margin: 10px;
+}
+
+.navLink:hover {
+    color: white;
+    border: 2px solid white;
+}
+
+.activeNavLink {
+    padding: 10px;
+    border: 5px solid #F3FFBD;
+    border-radius: 5px;
+    color: white;
+    background-color: orange;
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+.linksContainer {
+    margin: 20px;
 }

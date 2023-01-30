@@ -14,36 +14,27 @@ exports.getPolls = async (req, res, next) => {
 };
 
 exports.createPoll = (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body, 'body');
+  const url = `${req.protocol}://${req.get("host")}`;
 
-  const newFileName = req.file.filename + "." + req.file.mimeType.split("/")[1];
-  console.log(newFileName, 'newFilename')
-  fs.rename(`../images/${req.file.filename}`, newFileName, () => {
-    console.log("done");
+  const poll = new Poll({
+    title: req.body.title,
+    creatorId: mongoose.Types.ObjectId(req.body.creatorId),
+    options: req.body.options,
+    creatorUsername: req.body.creatorUsername,
+    imageURL: req.body.imageURL,
+    imagePath: req.file ? `/images/${req.file.filename}` : ""
   });
 
-
-  // const poll = new Poll({
-  //   title: req.body.title,
-  //   creatorId: mongoose.Types.ObjectId(req.body.creatorId),
-  //   voters: [],
-  //   options: req.body.options,
-  //   creatorUsername: req.body.creatorUsername,
-  //   totalVotes: 0,
-  //   imageURL: req.body.imageURL
-  // });
-
-  // poll
-  //   .save()
-  //   .then((result) => {
-  //     console.log("Created Poll");
-  //     console.log(result)
-  //     res.json(result);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  poll
+    .save()
+    .then((result) => {
+      console.log("Created Poll");
+      console.log(result);
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 exports.updatePoll = (req, res, next) => {

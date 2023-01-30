@@ -9,7 +9,7 @@ const pollSchema = Schema(
       required: true
     },
     options: {
-      type: [{ id: String, votes: Number, text: String }]
+      type: Array
     },
     creatorUsername: {
       type: String,
@@ -22,16 +22,18 @@ const pollSchema = Schema(
     },
     totalVotes: {
       type: Number,
-      default: 0,
-      required: true
+      default: 0
     },
     imageURL: {
       type: String
     },
-    // imageUpload: {
-    //   type: File
-    // },
-    voters: []
+    voters: {
+      type: Array,
+      default: []
+    },
+    imagePath: {
+      type: String
+    }
   },
   {
     timestamps: true

@@ -22,7 +22,8 @@ export function PollCreationStore(props) {
   const { loggedUser, setIsLoading } = useLoginStore();
   const [options, setOptions] = useState(optionsBase);
   const [fetchedPolls, setFetchedPolls] = useState([]);
-  const [imageUpload, setImageUpload] = useState({});
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageType, setImageType] = useState("url");
 
   const addOptionHandler = (event) => {
     event.preventDefault();
@@ -51,24 +52,27 @@ export function PollCreationStore(props) {
     });
   };
 
+  const addImageToggle = () => {
+    if (imageType === "url") {
+      setImageType("upload");
+    } else {
+      setImageType("url");
+      setImageUpload(null);
+    }
+  };
+
   const submitFormHandler = async (event) => {
     event.preventDefault();
 
-    console.log(options[0], "options[0]");
     let formData = new FormData();
+    if (imageUpload) {
+      formData.append("image", imageUpload, title.current.value);
+    }
 
-    formData.append("image", imageUpload, title.current.value);
+    formData.append("title", title.current.value);
     formData.append("creatorId", loggedUser.id);
     formData.append("creatorUsername", loggedUser.username);
     formData.append("imageURL", imageURL?.current?.value || "");
-
-    console.log(imageUpload);
-
-    // options[0].title = title.current.value;
-    // options[0].creatorId = loggedUser.id;
-    // options[0].creatorUsername = loggedUser.username;
-    // options[0].voters = [];
-    // options[0].imageURL = imageURL?.current?.value || "";
 
     const currentOptions = [];
 
@@ -83,7 +87,7 @@ export function PollCreationStore(props) {
       }
     }
 
-    formData.append("options", options[0].options);
+    formData.append("options", JSON.stringify(options[0].options));
 
     setOptions((previousState) => {
       return [...previousState];
@@ -127,20 +131,27 @@ export function PollCreationStore(props) {
   }
 
   async function postPoll(newPoll) {
-    console.log(newPoll, "post request");
-    try {
-      const response = await fetch("http://localhost:5000/polls/create", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: newPoll
+    axios
+      .post("http://localhost:5000/polls/create", newPoll, { withCredentials: true })
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+        alert("There was an error posting your poll. Please retry submitting it.");
       });
-      if (!response.ok) throw new Error();
-    } catch (err) {
-      alert("There was an error posting your poll. Please retry submitting it.");
-    }
+
+    // try {
+    //   const response = await fetch("http://localhost:5000/polls/create", {
+    //     method: "POST",
+    //     credentials: "include",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: newPoll
+    //   });
+    //   if (!response.ok) throw new Error();
+    // } catch (err) {
+    //   alert("There was an error posting your poll. Please retry submitting it.");
+    // }
   }
 
   async function uploadImageHandler(event) {
@@ -148,10 +159,10 @@ export function PollCreationStore(props) {
     let formData = new FormData();
 
     formData.append("image", imageUpload, imageUpload.name);
-    formData.append("title", title.current.value);
+    formData.append("title", "dog");
 
     axios
-      .post("http://localhost:5000/polls/upload", formData)
+      .post("http://localhost:5000/polls/upload", formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
@@ -174,9 +185,11 @@ export function PollCreationStore(props) {
       value={{
         title,
         imageURL,
-        imageUploadOnChange,
         options,
         fetchedPolls,
+        imageType,
+        imageUploadOnChange,
+        addImageToggle,
         uploadImageHandler,
         getPolls,
         submitFormHandler,

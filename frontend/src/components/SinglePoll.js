@@ -28,7 +28,7 @@ const SinglePollCard = ({ options: poll }) => {
           className={classes.img}
           src={
             poll.imageURL ||
-            poll.imageUpload ||
+            poll.imagePath ||
             "https://i0.wp.com/css-tricks.com/wp-content/uploads/2011/02/progressbars-fine.png?w=551&ssl=1"
           }
         ></img>
