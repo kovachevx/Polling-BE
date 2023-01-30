@@ -80,14 +80,3 @@ exports.deletePoll = (req, res, next) => {
       next(error);
     });
 };
-
-exports.uploadImage = (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body.title)
-
-  const newFileName = req.file.filename + "." + req.file.mimetype.split("/")[1];
-  console.log(newFileName, 'newFilename')
-  fs.rename(`./backend/images/${req.file.filename}`, `./backend/images/${newFileName}`, () => {
-    console.log("done");
-  });
-};
