@@ -1,6 +1,7 @@
 const Poll = require("../models/poll");
 const mongoose = require("mongoose");
 const fs = require("fs");
+const path = require("path");
 
 exports.getPolls = async (req, res, next) => {
   Poll.find({ lean: true })
@@ -16,8 +17,6 @@ exports.getPolls = async (req, res, next) => {
 exports.createPoll = (req, res, next) => {
   const url = `${req.protocol}://${req.get("host")}`;
 
-  console.log(req.body.options, "options");
-
   const poll = new Poll({
     title: req.body.title,
     creatorId: mongoose.Types.ObjectId(req.body.creatorId),
@@ -31,7 +30,6 @@ exports.createPoll = (req, res, next) => {
     .save()
     .then((result) => {
       console.log("Created Poll");
-      console.log(result);
       res.json(result);
     })
     .catch((error) => {
@@ -62,13 +60,26 @@ exports.updatePoll = (req, res, next) => {
 
 exports.deletePoll = (req, res, next) => {
   const pollId = req.params.pollId;
+  let imagePath;
 
   Poll.findByIdAndRemove(pollId)
-    .then(() => {
+    .then((poll) => {
+      imagePath = poll.imagePath;
       console.log("DESTROYED POLL");
       res.json({ message: "Poll deleted successfully!" });
+    })
+    .then((result) => {
+      if (imagePath) {
+        imagePath = imagePath.split("/").slice(-2).join("/");
+
+        fs.unlink(`${__dirname}/../${imagePath}`, (error) => {
+          if (error) console.log(error);
+        });
+      }
     })
     .catch((error) => {
       next(error);
     });
+
+  console.log(imagePath);
 };

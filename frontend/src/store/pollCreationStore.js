@@ -94,6 +94,8 @@ export function PollCreationStore(props) {
       return [...previousState];
     });
 
+    setImageUpload(null);
+
     await postPoll(formData);
     await getPolls();
     navigate("/submitted", { replace: true });
