@@ -20,16 +20,16 @@ export function PollCreationStore(props) {
   const imageURL = useRef("");
   const navigate = useNavigate();
   const { loggedUser, setIsLoading } = useLoginStore();
-  const [options, setOptions] = useState(optionsBase);
+  const [pollBeingCreated, setPollBeingCreated] = useState(optionsBase);
   const [fetchedPolls, setFetchedPolls] = useState([]);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageType, setImageType] = useState("url");
 
   const addOptionHandler = (event) => {
     event.preventDefault();
-    options[0].options.push({ votes: 0 });
+    pollBeingCreated[0].options.push({ votes: 0 });
 
-    setOptions((prevState) => {
+    setPollBeingCreated((prevState) => {
       return [...prevState];
     });
   };
@@ -39,15 +39,15 @@ export function PollCreationStore(props) {
   };
 
   const inputChangeHandler = (event, index) => {
-    options[0].options[index].text = event.target.value;
+    pollBeingCreated[0].options[index].text = event.target.value;
   };
 
   const removeOptionHandler = (event) => {
     event.preventDefault();
-    if (options[0].options.length === 2) return;
-    options[0].options.pop();
+    if (pollBeingCreated[0].options.length === 2) return;
+    pollBeingCreated[0].options.pop();
 
-    setOptions((prevState) => {
+    setPollBeingCreated((prevState) => {
       return [...prevState];
     });
   };
@@ -76,20 +76,21 @@ export function PollCreationStore(props) {
 
     const currentOptions = [];
 
-    for (let option of options[0].options) {
+    for (let option of pollBeingCreated[0].options) {
+      console.log(option);
       if (option.text === undefined || option.text === "" || !title || title.current.value === "") {
         return alert("No empty fields are allowed! Either fill in or remove the empty options.");
       }
       if (currentOptions.includes(option.text)) {
         return alert("No matching options are allowed. Either change or remove the option in question.");
       } else {
-        currentOptions.push(option.text);
+        currentOptions.push({ text: option.text });
       }
     }
 
-    formData.append("options", JSON.stringify(options[0].options));
+    formData.append("options", JSON.stringify(currentOptions));
 
-    setOptions((previousState) => {
+    setPollBeingCreated((previousState) => {
       return [...previousState];
     });
 
@@ -99,7 +100,7 @@ export function PollCreationStore(props) {
   };
 
   const createAnotherPollHandler = () => {
-    setOptions([...optionsBase]);
+    setPollBeingCreated([...optionsBase]);
     navigate("/create");
   };
 
@@ -138,46 +139,6 @@ export function PollCreationStore(props) {
         console.log(err);
         alert("There was an error posting your poll. Please retry submitting it.");
       });
-
-    // try {
-    //   const response = await fetch("http://localhost:5000/polls/create", {
-    //     method: "POST",
-    //     credentials: "include",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: newPoll
-    //   });
-    //   if (!response.ok) throw new Error();
-    // } catch (err) {
-    //   alert("There was an error posting your poll. Please retry submitting it.");
-    // }
-  }
-
-  async function uploadImageHandler(event) {
-    event.preventDefault();
-    let formData = new FormData();
-
-    formData.append("image", imageUpload, imageUpload.name);
-    formData.append("title", "dog");
-
-    axios
-      .post("http://localhost:5000/polls/upload", formData, { headers: { "Content-Type": "multipart/form-data" } })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-
-    // try {
-    //   await fetch("http://localhost:5000/polls/upload", {
-    //     method: "POST",
-    //     credentials: "include",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringfy(formData)
-    //   });
-    // } catch (err) {
-    //   alert("There was an error uploading your image.");
-    // }
   }
 
   return (
@@ -185,12 +146,11 @@ export function PollCreationStore(props) {
       value={{
         title,
         imageURL,
-        options,
+        options: pollBeingCreated,
         fetchedPolls,
         imageType,
         imageUploadOnChange,
         addImageToggle,
-        uploadImageHandler,
         getPolls,
         submitFormHandler,
         addOptionHandler,

@@ -8,9 +8,7 @@ const pollSchema = Schema(
       type: String,
       required: true
     },
-    options: {
-      type: Array
-    },
+    options: [{ text: String, votes: { type: Number, default: 0 } }],
     creatorUsername: {
       type: String,
       required: true
@@ -28,7 +26,7 @@ const pollSchema = Schema(
       type: String
     },
     voters: {
-      type: Array,
+      type: [],
       default: []
     },
     imagePath: {

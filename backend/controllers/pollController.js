@@ -16,13 +16,15 @@ exports.getPolls = async (req, res, next) => {
 exports.createPoll = (req, res, next) => {
   const url = `${req.protocol}://${req.get("host")}`;
 
+  console.log(req.body.options, "options");
+
   const poll = new Poll({
     title: req.body.title,
     creatorId: mongoose.Types.ObjectId(req.body.creatorId),
-    options: req.body.options,
+    options: JSON.parse(req.body.options),
     creatorUsername: req.body.creatorUsername,
     imageURL: req.body.imageURL,
-    imagePath: req.file ? `/images/${req.file.filename}` : ""
+    imagePath: req.file ? `${url}/images/${req.file.filename}` : ""
   });
 
   poll
@@ -42,7 +44,6 @@ exports.updatePoll = (req, res, next) => {
 
   Poll.findById(pollId)
     .then((poll) => {
-      console.log(poll);
       poll.title = req.body.title;
       poll.creatorId = req.body.creatorId;
       poll.voters = req.body.voters;
